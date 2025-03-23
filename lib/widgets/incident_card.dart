@@ -1,97 +1,113 @@
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 
-enum IncidentType { emergency, route, report }
+enum IncidentStatus {
+  pending,
+  resolved,
+}
 
 /// Card widget to display incident information
 class IncidentCard extends StatelessWidget {
-  final String title;
-  final String description;
   final String date;
   final String time;
-  final IncidentType type;
+  final String location;
+  final String description;
+  final IncidentStatus status;
+  final VoidCallback? onTap;
 
   const IncidentCard({
     super.key,
-    required this.title,
-    required this.description,
     required this.date,
     required this.time,
-    required this.type,
+    required this.location,
+    required this.description,
+    required this.status,
+    this.onTap,
   });
 
-  Color get _typeColor {
-    switch (type) {
-      case IncidentType.emergency:
-        return Colors.red;
-      case IncidentType.route:
-        return AppColors.safeZone;
-      case IncidentType.report:
-        return Colors.orange;
+  Color get _statusColor {
+    switch (status) {
+      case IncidentStatus.pending:
+        return AppColors.error;
+      case IncidentStatus.resolved:
+        return AppColors.success;
     }
   }
 
-  IconData get _typeIcon {
-    switch (type) {
-      case IncidentType.emergency:
-        return Icons.warning_rounded;
-      case IncidentType.route:
-        return Icons.route;
-      case IncidentType.report:
-        return Icons.report_problem;
+  String get _statusText {
+    switch (status) {
+      case IncidentStatus.pending:
+        return 'Pending';
+      case IncidentStatus.resolved:
+        return 'Resolved';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.cardBackground,
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(_typeIcon, color: _typeColor, size: 24),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        date,
+                        style: AppTextStyles.subheading,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        time,
+                        style: AppTextStyles.caption,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                      vertical: AppSpacing.xs,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _statusColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      _statusText,
+                      style: AppTextStyles.caption.copyWith(
+                        color: _statusColor,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  time,
-                  style: TextStyle(
-                    color: AppColors.textSecondary.withOpacity(0.7),
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              description,
-              style: TextStyle(
-                color: AppColors.textSecondary.withOpacity(0.9),
-                fontSize: 14,
+                ],
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              date,
-              style: TextStyle(
-                color: AppColors.textSecondary.withOpacity(0.7),
-                fontSize: 12,
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                location,
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                description,
+                style: AppTextStyles.body,
+              ),
+            ],
+          ),
         ),
       ),
     );

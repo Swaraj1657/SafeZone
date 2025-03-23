@@ -24,10 +24,10 @@ class HistoryScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _FilterChip(label: 'All', isSelected: true),
-                  _FilterChip(label: 'Alerts'),
-                  _FilterChip(label: 'Safe Routes'),
-                  _FilterChip(label: 'Reports'),
+                  _FilterChip(label: 'All', isSelected: true, onTap: () {}),
+                  _FilterChip(label: 'Alerts', onTap: () {}),
+                  _FilterChip(label: 'Safe Routes', onTap: () {}),
+                  _FilterChip(label: 'Reports', onTap: () {}),
                 ],
               ),
             ),
@@ -37,27 +37,36 @@ class HistoryScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(AppSpacing.md),
-              children: const [
+              children: [
                 IncidentCard(
-                  title: 'SOS Alert Triggered',
-                  description: 'Emergency contacts were notified',
                   date: '2024-03-15',
                   time: '18:30',
-                  type: IncidentType.emergency,
+                  location: 'Oak Street',
+                  description: 'SOS Alert Triggered - Emergency contacts were notified',
+                  status: IncidentStatus.resolved,
+                  onTap: () {
+                    // Handle incident tap
+                  },
                 ),
                 IncidentCard(
-                  title: 'Safe Route Navigation',
-                  description: 'From Office to Home',
                   date: '2024-03-14',
                   time: '21:15',
-                  type: IncidentType.route,
+                  location: 'Office to Home',
+                  description: 'Safe Route Navigation completed',
+                  status: IncidentStatus.resolved,
+                  onTap: () {
+                    // Handle incident tap
+                  },
                 ),
                 IncidentCard(
-                  title: 'Area Report',
-                  description: 'Suspicious activity reported in Downtown',
                   date: '2024-03-13',
                   time: '19:45',
-                  type: IncidentType.report,
+                  location: 'Downtown Area',
+                  description: 'Suspicious activity reported - Under investigation',
+                  status: IncidentStatus.pending,
+                  onTap: () {
+                    // Handle incident tap
+                  },
                 ),
               ],
             ),

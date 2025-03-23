@@ -1,45 +1,45 @@
 import 'package:flutter/material.dart';
 
-/// App-wide color definitions
+/// App color scheme
 class AppColors {
-  // Primary Colors
-  static const Color primary = Color(0xFFC50048); // Deep magenta/pink
-  static const Color secondary = Color(0xFF140014); // Dark purple/burgundy
-
-  // Text Colors
-  static const Color textPrimary = Colors.white;
-  static const Color textSecondary = Color(0xFFFFCCD5); // Light pink
-
-  // Alert Colors
-  static const Color safeZone = Color(0xFFFFD700); // Yellow
-  static const Color danger = Colors.red;
-
-  // UI Colors
-  static const Color cardBackground = Color(0xFF1A001A);
-  static const Color divider = Color(0xFF2A002A);
+  static const primary = Color(0xFF6B4EFF);
+  static const secondary = Color(0xFF8C79FF);
+  static const background = Color(0xFFF5F5F5);
+  static const text = Color(0xFF1A1A1A);
+  static const error = Color(0xFFFF4D4D);
+  static const success = Color(0xFF4CAF50);
+  static const textPrimary = Color(0xFF1A1A1A); // Near black
+  static const textSecondary = Color(0xFF666666); // Dark gray
+  static const cardBackground = Colors.white;
+  static const safeZone = Color(0xFFFFD700); // Yellow for safe zones
 }
 
-/// App-wide text styles
+/// App text styles
 class AppTextStyles {
   static const TextStyle heading = TextStyle(
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
   );
 
   static const TextStyle subheading = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w500,
-    color: AppColors.textSecondary,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
   );
 
   static const TextStyle body = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
     color: AppColors.textPrimary,
+  );
+
+  static const TextStyle caption = TextStyle(
+    fontSize: 12,
+    color: AppColors.textSecondary,
   );
 }
 
-/// App-wide spacing constants
+/// App spacing constants
 class AppSpacing {
   static const double xs = 4.0;
   static const double sm = 8.0;
