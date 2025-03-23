@@ -3,30 +3,29 @@ import 'screens/home_screen.dart';
 import 'screens/location_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/community_screen.dart';
+import 'screens/emergency_contacts_screen.dart';
+import 'utils/constants.dart';
 
-void main() {
-  runApp(const WomenSafetyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const SafeZoneApp());
 }
 
-/// Root widget of the Women Safety Application
-class WomenSafetyApp extends StatelessWidget {
-  const WomenSafetyApp({super.key});
+class SafeZoneApp extends StatelessWidget {
+  const SafeZoneApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Women Safety App',
+      title: 'SafeZone',
       theme: ThemeData(
-        // Custom theme with specified color scheme
-        primaryColor: const Color(0xFFC50048), // Deep magenta
-        scaffoldBackgroundColor: const Color(
-          0xFF140014,
-        ), // Dark purple background
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Color(0xFFFFCCD5)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
+          primary: AppColors.primary,
+          secondary: AppColors.secondary,
         ),
         useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.background,
       ),
       home: const MainNavigator(),
       debugShowCheckedModeBanner: false,
@@ -34,7 +33,6 @@ class WomenSafetyApp extends StatelessWidget {
   }
 }
 
-/// MainNavigator handles the bottom navigation between main screens
 class MainNavigator extends StatefulWidget {
   const MainNavigator({super.key});
 
@@ -48,6 +46,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   final List<Widget> _screens = const [
     HomeScreen(),
     LocationScreen(),
+    EmergencyContactsScreen(),
     HistoryScreen(),
     CommunityScreen(),
   ];
@@ -57,7 +56,7 @@ class _MainNavigatorState extends State<MainNavigator> {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color(0xFF1A001A),
+        backgroundColor: AppColors.cardBackground,
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
           setState(() {
@@ -74,6 +73,11 @@ class _MainNavigatorState extends State<MainNavigator> {
             icon: Icon(Icons.location_on_outlined),
             selectedIcon: Icon(Icons.location_on),
             label: 'Location',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.contacts_outlined),
+            selectedIcon: Icon(Icons.contacts),
+            label: 'Contacts',
           ),
           NavigationDestination(
             icon: Icon(Icons.history_outlined),
